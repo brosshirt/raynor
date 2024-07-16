@@ -8,13 +8,13 @@ const ClipFormatter = () => {
     const handleGenerateClip = async () => {
         const clipHTML = await linkToClipHTML(link);
         setLink("")
-        setFormattedClipHTML(clip);
+        setFormattedClipHTML(clipHTML);
     };
 
     const handleCopy = () => {
         const clipboardItem = new ClipboardItem({ 
-            'text/html': new Blob([formattedClip], { type: 'text/html' }),
-            'text/plain': new Blob([formattedClip], { type: 'text/plain' })
+            'text/html': new Blob([formattedClipHTML], { type: 'text/html' }),
+            'text/plain': new Blob([formattedClipHTML], { type: 'text/plain' })
         });
           
         navigator.clipboard.write([clipboardItem])
