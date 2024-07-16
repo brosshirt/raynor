@@ -1,7 +1,7 @@
 from lib.services import get_openai_client, get_gpt_news_info, get_article_text
 from flask import Flask, request, jsonify, send_from_directory
-from flask_cors import CORS, cross_origin
-
+from flask_cors import CORS
+import logging
 
 
 openai_client = get_openai_client()
@@ -24,12 +24,19 @@ def static_proxy(path):
 def clip_format():
     article_link = request.json.get('article_link', '')
     
-    # Plain text representing the news article
-    article_text = get_article_text(article_link)
+    try:
+        # Plain text representing the news article
+        article_text = get_article_text(article_link)
+
+        # Title, author, publication, publication_date, and link
+        result = get_gpt_news_info(article_text, openai_client)
+        result["article_link"] = article_link
+
+        return jsonify(result)
+    except Exception as e:
+        logging.error(f"Error clip-format: {str(e)}, Link: {article_link}")
+        return jsonify({"error": str(e)}), 400
     
-    # Title, author, publication, publication_date, and link
-    result = {**get_gpt_news_info(article_text, openai_client), "article_link": article_link}
-    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 load_dotenv()
 from openai import OpenAI
 import json
+import logging
 
 from newspaper import Article
 from bs4 import BeautifulSoup
@@ -21,13 +22,18 @@ publication_date: Should be in a format like "July 8, 2024", ignore any time of 
 """
 
 
+
 def get_openai_client():
     api_key = os.getenv('OPENAI_API_KEY')
     return OpenAI(api_key=api_key)
 
 def get_gpt_news_info(article_text, client):
     chat_completion = client.chat.completions.create(messages=[{"role": "system", "content": SYSTEM_PROMPT}, {"role": "user", "content": article_text}], model="gpt-3.5-turbo-0125")
-    return json.loads(chat_completion.choices[0].message.content)
+    gpt_response = chat_completion.choices[0].message.content
+    try:  
+        return json.loads(gpt_response)
+    except json.JSONDecodeError:
+        raise Exception(f"Invalid GPT JSON: {gpt_response}")
 
 def get_article_text(article_link):
     # Get the article from the link

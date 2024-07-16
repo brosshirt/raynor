@@ -14,6 +14,11 @@ export async function linkToClipHTML(link) {
         });
         
         const articleInfo = await response.json();
+
+        if (articleInfo.error){
+            console.error("Backend error: " + articleInfo.error)
+            return "Backend error"
+        }
         return articleInfoToHTML(articleInfo);
     } catch (error) {
         console.error('Error fetching clip:', error);

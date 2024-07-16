@@ -10,3 +10,4 @@ backend/class-notes/
 backend/build/
 *.pyc
 __pycache__/
+*.log
