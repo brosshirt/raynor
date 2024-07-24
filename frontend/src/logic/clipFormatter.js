@@ -5,7 +5,7 @@
 
 export async function linkToClipHTML(link) {
     try {
-        const response = await fetch('/clip-format', {
+        const response = await fetch('/api/clip-format', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

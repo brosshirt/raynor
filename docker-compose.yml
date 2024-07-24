@@ -1,0 +1,22 @@
+version: '3'
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+
+  frontend:
+    build: ./frontend
+    expose:
+      - "3000"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    expose:
+      - "5000"
+

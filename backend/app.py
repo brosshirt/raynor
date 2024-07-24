@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import logging
 
+logging.basicConfig(filename='app.log', level=logging.ERROR)
 
 openai_client = get_openai_client()
 
@@ -20,7 +21,7 @@ def static_proxy(path):
     return send_from_directory(app.static_folder, path)
 
 # API
-@app.route('/clip-format', methods=['POST'])
+@app.route('/api/clip-format', methods=['POST'])
 def clip_format():
     article_link = request.json.get('article_link', '')
     
