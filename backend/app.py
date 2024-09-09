@@ -2,6 +2,21 @@ from lib.services import get_openai_client, get_gpt_news_info, get_article_text
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import logging
+from datetime import datetime
+
+
+
+
+
+# Initialize browser
+from playwright.sync_api import sync_playwright
+
+before_browser_launch = datetime.now()
+playwright = sync_playwright().start()
+browser = playwright.chromium.launch(headless=True)
+context = browser.new_context(user_agent="Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.6533.17 Safari/537.36")
+page = context.new_page()
+print("Time to load initial page ", datetime.now() - before_browser_launch, flush=True)
 
 logging.basicConfig(filename='app.log', level=logging.ERROR)
 
@@ -24,10 +39,11 @@ def static_proxy(path):
 @app.route('/api/clip-format', methods=['POST'])
 def clip_format():
     article_link = request.json.get('article_link', '')
+
     
     try:
         # Plain text representing the news article
-        article_text = get_article_text(article_link)
+        article_text = get_article_text(article_link, page)
 
         # Title, author, publication, publication_date, and link
         result = get_gpt_news_info(article_text, openai_client)
@@ -41,3 +57,9 @@ def clip_format():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+# Don't forget to close the browser when the app stops
+@app.teardown_appcontext
+def cleanup(exception=None):
+    browser.close()
+    playwright.stop()

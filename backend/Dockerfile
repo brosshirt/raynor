@@ -12,6 +12,9 @@ COPY requirements.txt .
 # Imperfect dependency management, you want to use dependency caching so you don't reinstall every dependency after each patch
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN pip install playwright
+RUN playwright install --with-deps chromium
+
 RUN pip install gunicorn
 
 # Copy the rest of the application code into the container
