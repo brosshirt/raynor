@@ -1,0 +1,20 @@
+FROM node:latest 
+
+WORKDIR /app
+
+# # add `/app/node_modules/.bin` to $PATH
+# ENV PATH /app/node_modules/.bin:$PATH
+
+COPY package*.json ./
+
+RUN npm install 
+# RUN npm install react-scripts@3.4.1 -g --silent
+
+COPY . . 
+
+# Start the dev server with hot reload
+# CMD [ "npm", "run", "start"]
+CMD ["npm", "start"]
+
+
+

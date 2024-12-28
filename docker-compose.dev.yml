@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports: 
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - frontend
+      - backend
+  
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules # use the node_modules inside the container, not from ./frontend
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    # environment:
+    #   - WATCHPACK_POLLING=true
+    #   - WATCHPACK_POLLING_INTERVAL=100
+
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./backend:/app
