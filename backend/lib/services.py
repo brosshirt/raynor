@@ -29,6 +29,7 @@ publication_date: Should be in a format like "July 8, 2024", ignore any time of 
 
 def get_openai_client():
     api_key = os.getenv('OPENAI_API_KEY')
+    print('openapikey', api_key, flush=True)
     return OpenAI(api_key=api_key)
 
 def get_gpt_news_info(article_text, client):
