@@ -12,7 +12,7 @@
 
 ### Backend (dev)
 
-#### flask run 
+#### python3 app.py (do not do flask run) 
 
 ### Prod
 
