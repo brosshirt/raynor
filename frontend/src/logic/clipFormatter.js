@@ -15,6 +15,8 @@ export async function linkToClipHTML(link) {
         
         const articleInfo = await response.json();
 
+        console.log('backendResponse', articleInfo)
+
         if (articleInfo.error){
             console.error("Backend error: " + articleInfo.error)
             return "Backend error"

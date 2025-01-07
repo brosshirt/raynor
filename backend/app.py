@@ -38,6 +38,7 @@ def static_proxy(path):
 # API
 @app.route('/api/clip-format', methods=['POST'])
 def clip_format():
+    
     article_link = request.json.get('article_link', '')
 
     
@@ -56,7 +57,8 @@ def clip_format():
     
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, threaded=False, use_reloader=False) # use_reloader is critical for single_thread use and compatibility with sync.playwright
+
 
 # Don't forget to close the browser when the app stops
 @app.teardown_appcontext

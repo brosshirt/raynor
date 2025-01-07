@@ -47,10 +47,12 @@ def get_gpt_news_info(article_text, client):
 def get_article_text(article_link, page):
     # Disable images
     before_loading_page = datetime.now()
+    print('hellooooo')
     page.route("**/*", lambda route, request: route.abort() if request.resource_type in ["image", "stylesheet", "font", "script"] else route.continue_())
 
-
+    print('this part will print')
     page.goto(article_link)
+    print("this will not print")
 
     print("time to go to page and render minus images ", datetime.now() - before_loading_page, flush=True)
 
