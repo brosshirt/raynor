@@ -2,7 +2,7 @@
 
 ## Suite for all Raynor Ave tools
 
-### Next step: Get the app running. The issue is that we are using a sync playwright library and an async backend (flask dev server). 
+### Next step: Set up a scheme for getting error reports. The goal is for Aaron to press a button to highlight problematic links and for me to receive a neat list of the links that didn't work and any notes about what the error might be. Come up with just the backend for now and put some shitty UI on it. We'll have a clearer picture of what the UI should be later. 
 
 ## Build Instructions
 
