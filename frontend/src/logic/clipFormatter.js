@@ -3,32 +3,55 @@
 
 
 
-export async function linkToClipHTML(link) {
+// export async function linkToClipHTML(link) {
+//     try {
+//         const response = await fetch('http://127.0.0.1:5000/api/clip-format', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({ article_link: link }),
+//         });
+        
+//         const articleInfo = await response.json();
+
+//         console.log('backendResponse', articleInfo)
+
+//         if (articleInfo.error){
+//             console.error("Backend error: " + articleInfo.error)
+//             return "Backend error"
+//         }
+//         return articleInfoToHTML(articleInfo);
+//     } catch (error) {
+//         console.error('Error fetching clip:', error);
+//         return 'Error fetching clip';
+//     }
+// }
+
+export async function getClip(link) {
     try {
         const response = await fetch('http://127.0.0.1:5000/api/clip-format', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ article_link: link }),
-        });
-        
-        const articleInfo = await response.json();
+            body: JSON.stringify({article_link: link})
+        })
 
-        console.log('backendResponse', articleInfo)
+        const clip = await response.json()
 
-        if (articleInfo.error){
-            console.error("Backend error: " + articleInfo.error)
-            return "Backend error"
+        if (clip.error){
+            throw new Error(clip.error)
         }
-        return articleInfoToHTML(articleInfo);
-    } catch (error) {
-        console.error('Error fetching clip:', error);
-        return 'Error fetching clip';
+        return clip
+    } catch(error){
+        console.error('Error fetching clip:', error)
+        return 'Error fetching clip: ' + error
     }
 }
 
-function articleInfoToHTML(articleInfo){
+
+export function articleInfoToHTML(articleInfo){
     const title = articleInfo.title;
     const publication = articleInfo.publication;
     const publicationDate = articleInfo.publication_date;

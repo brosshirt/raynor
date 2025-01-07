@@ -1,4 +1,4 @@
-from lib.services import get_openai_client, get_gpt_news_info, get_article_text
+from lib.services import get_openai_client, get_gpt_news_info, get_article_text, log_error
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import logging
@@ -36,6 +36,24 @@ def static_proxy(path):
     return send_from_directory(app.static_folder, path)
 
 # API
+@app.route('/api/error', methods=['POST'])
+def report_error():
+    try:
+        data = request.json
+
+        
+        error_type = data.get('error_type', '')
+        publication = data.get('publication', '')
+        article_link = data.get('article_link', '')
+        error_message = data.get('error_message', '')
+
+        log_error(error_type, publication, article_link, error_message)
+        return jsonify({"success": True})
+    except Exception as e:
+        logging.error(f"Error report-error: {str(e)}, Link: {article_link}")
+        return jsonify({"error": str(e)}), 400
+
+
 @app.route('/api/clip-format', methods=['POST'])
 def clip_format():
     

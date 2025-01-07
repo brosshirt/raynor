@@ -1,0 +1,22 @@
+.clipDisplay {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 100%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+span {
+    flex: 10;
+}
+
+
+button.copy{
+    flex: 1;
+    height: 20px;
+}
+button.flag {
+    flex: 1;
+    height: 20px;
+}

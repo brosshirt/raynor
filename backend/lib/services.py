@@ -1,3 +1,4 @@
+import csv
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -41,22 +42,32 @@ def get_gpt_news_info(article_text, client):
         raise Exception(f"Invalid GPT JSON: {gpt_response}")
 
 
-
-
-
 def get_article_text(article_link, page):
     # Disable images
-    before_loading_page = datetime.now()
-    print('hellooooo')
     page.route("**/*", lambda route, request: route.abort() if request.resource_type in ["image", "stylesheet", "font", "script"] else route.continue_())
 
-    print('this part will print')
     page.goto(article_link)
-    print("this will not print")
-
-    print("time to go to page and render minus images ", datetime.now() - before_loading_page, flush=True)
 
     html = page.content()
 
     soup = BeautifulSoup(html, 'html.parser')
     return soup.get_text()
+
+
+def log_error(error_type, publication, article_link, error_message, file_path='logs.csv'):
+
+    file_exists = os.path.isfile(file_path)
+    with open(file_path, 'a', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        # If it's a brand-new file, write the CSV header
+        if not file_exists:
+            writer.writerow(["error_type", "publication", "article_link", "error_message", "timestamp"])
+        # Append the new error row
+        writer.writerow([
+            error_type,
+            publication,
+            article_link,
+            error_message,
+            datetime.now().isoformat(),
+        ])
+        
