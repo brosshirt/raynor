@@ -30,7 +30,8 @@ const Clip = ({clip, reportError}) => {
     <div className="clipDisplay">
         <span id="textToCopy" dangerouslySetInnerHTML={{ __html: formattedClipHTML }}></span>
         <button className='copy' onClick={handleCopy}>Copy</button>
-        <button className='flag' onClick={() => reportError(clip)}>🚩</button>
+        <button className='clipboardError' onClick={() => reportError(clip, 'copy paste')}>copy/paste error</button>
+        <button className='flag' onClick={() => reportError(clip, 'clip generation')}>🚩</button>
     </div>
   )
 }

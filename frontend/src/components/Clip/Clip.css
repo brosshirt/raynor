@@ -16,6 +16,10 @@ button.copy{
     flex: 1;
     height: 20px;
 }
+button.clipboardError {
+    flex: 1;
+    height: 20px;
+}
 button.flag {
     flex: 1;
     height: 20px;

@@ -21,7 +21,7 @@ const ClipFormatter = () => {
     }
 
 
-    const handleReportError = async (clip) => {
+    const handleReportError = async (clip, error_type) => {
         console.log('clip', clip)
         
         const res = await fetch('http://127.0.0.1:5000/api/error', {
@@ -30,7 +30,7 @@ const ClipFormatter = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                error_type: 'link generation',
+                error_type: error_type,
                 publication: clip.publication,
                 article_link: clip.article_link,
                 error_message: ''

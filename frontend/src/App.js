@@ -1,11 +1,14 @@
 
 import './App.css';
-import ClipFormatter from './components/ClipFormatter/ClipFormatter'
+import { BrowserRouter } from 'react-router-dom';
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
   return (
     <div className="App">
-      <ClipFormatter/>
+      <BrowserRouter>
+        <AppRoutes/>
+      </BrowserRouter>
     </div>
   );
 }

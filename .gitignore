@@ -1,5 +1,6 @@
 *.env
 
+
 # Node
 frontend/node_modules/
 frontend/build/
@@ -8,6 +9,7 @@ frontend/build/
 backend/venv/
 backend/class-notes/
 backend/build/
+backend/logs.csv
 *.pyc
 __pycache__/
 *.log

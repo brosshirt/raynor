@@ -1,34 +1,5 @@
-
-
-
-
-
-// export async function linkToClipHTML(link) {
-//     try {
-//         const response = await fetch('http://127.0.0.1:5000/api/clip-format', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({ article_link: link }),
-//         });
-        
-//         const articleInfo = await response.json();
-
-//         console.log('backendResponse', articleInfo)
-
-//         if (articleInfo.error){
-//             console.error("Backend error: " + articleInfo.error)
-//             return "Backend error"
-//         }
-//         return articleInfoToHTML(articleInfo);
-//     } catch (error) {
-//         console.error('Error fetching clip:', error);
-//         return 'Error fetching clip';
-//     }
-// }
-
 export async function getClip(link) {
+    console.log('getClip')
     try {
         const response = await fetch('http://127.0.0.1:5000/api/clip-format', {
             method: 'POST',
@@ -52,6 +23,7 @@ export async function getClip(link) {
 
 
 export function articleInfoToHTML(articleInfo){
+    console.log('articleInfoToHtml', articleInfo)
     const title = articleInfo.title;
     const publication = articleInfo.publication;
     const publicationDate = articleInfo.publication_date;

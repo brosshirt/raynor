@@ -1,5 +1,6 @@
 from lib.services import get_openai_client, get_gpt_news_info, get_article_text, log_error
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, send_file
+import os
 from flask_cors import CORS
 import logging
 from datetime import datetime
@@ -36,6 +37,21 @@ def static_proxy(path):
     return send_from_directory(app.static_folder, path)
 
 # API
+@app.route('/api/error', methods=['GET'])
+def get_errors():
+    if not os.path.exists('logs.csv'):
+        return jsonify({'error': 'logs.csv is missing on backend'}), 404
+
+    return send_file(
+        'logs.csv',
+        as_attachment=True,
+        mimetype='text/csv',
+        download_name= 'error_logs.csv'
+    )
+
+
+
+
 @app.route('/api/error', methods=['POST'])
 def report_error():
     try:
@@ -56,6 +72,7 @@ def report_error():
 
 @app.route('/api/clip-format', methods=['POST'])
 def clip_format():
+    print('POST clip-format')
     
     article_link = request.json.get('article_link', '')
 
@@ -75,7 +92,7 @@ def clip_format():
     
 
 if __name__ == '__main__':
-    app.run(debug=True, threaded=False, use_reloader=False) # use_reloader is critical for single_thread use and compatibility with sync.playwright
+    app.run(debug=True, threaded=False, use_reloader=False) # use_reloader=False is critical for single_thread use and compatibility with sync.playwright
 
 
 # Don't forget to close the browser when the app stops
