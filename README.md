@@ -8,11 +8,17 @@
 
 ### Frontend (Dev)
 
-#### npm start
+1. npm install
+2. npm start
 
 ### Backend (dev)
 
-#### python3 app.py (do not do flask run) 
+1. python3 -m venv venv
+2. source venv/bin/activate
+3. pip install -r requirements.txt
+4. playwright install
+5. Add env vars
+6. python3 app.y
 
 ### Prod
 
