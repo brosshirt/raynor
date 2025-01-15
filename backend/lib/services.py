@@ -54,7 +54,7 @@ def get_article_text(article_link, page):
     return soup.get_text()
 
 
-def log_error(error_type, publication, article_link, error_message, file_path='logs.csv'):
+def log_error(error_type, publication, article_link, error_message, file_path='logs/logs.csv'):
 
     file_exists = os.path.isfile(file_path)
     with open(file_path, 'a', newline='', encoding='utf-8') as f:

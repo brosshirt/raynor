@@ -1,22 +1,23 @@
-# version: '3'
-# services:
-#   nginx:
-#     build: ./nginx
-#     ports:
-#       - "80:80"
-#     depends_on:
-#       - frontend
-#       - backend
+version: '3'
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
 
-#   frontend:
-#     build: ./frontend
-#     expose:
-#       - "3000"
-#     depends_on:
-#       - backend
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    environment:
+      - NODE_ENV=production
+      # - REACT_APP_BACKEND_URL=http://localhost
 
-#   backend:
-#     build: ./backend
-#     expose:
-#       - "5000"
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend/logs:/app/logs
 

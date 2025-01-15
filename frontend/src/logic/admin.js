@@ -1,7 +1,7 @@
 export async function retrieveCSV() {
   try {
     // Fetch the CSV file as a blob
-    const response = await fetch('http://127.0.0.1:5000/api/error')
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/error`)
     if (!response.ok) {
       throw new Error('Network response was not ok')
     }

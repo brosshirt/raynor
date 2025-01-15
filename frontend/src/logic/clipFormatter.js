@@ -1,7 +1,10 @@
 export async function getClip(link) {
     console.log('getClip')
+
+    console.log(process.env.REACT_APP_BACKEND_URL)
+
     try {
-        const response = await fetch('http://127.0.0.1:5000/api/clip-format', {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/clip-format`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

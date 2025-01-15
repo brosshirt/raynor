@@ -39,11 +39,11 @@ def static_proxy(path):
 # API
 @app.route('/api/error', methods=['GET'])
 def get_errors():
-    if not os.path.exists('logs.csv'):
-        return jsonify({'error': 'logs.csv is missing on backend'}), 404
+    if not os.path.exists('logs/logs.csv'):
+        return jsonify({'error': 'logs/logs.csv is missing on backend'}), 404
 
     return send_file(
-        'logs.csv',
+        'logs/logs.csv',
         as_attachment=True,
         mimetype='text/csv',
         download_name= 'error_logs.csv'
@@ -96,7 +96,10 @@ if __name__ == '__main__':
 
 
 # Don't forget to close the browser when the app stops
-@app.teardown_appcontext
-def cleanup(exception=None):
-    browser.close()
-    playwright.stop()
+# @app.teardown_appcontext
+# def cleanup(exception=None):
+#     print('SHUTTING THE BROWSER AND PLAYWRIGHT DOWN', flush=True)
+#     browser.close()
+#     playwright.stop()
+
+# This is commented out because in production it runs after each request, so the first request will work and then they will all fail

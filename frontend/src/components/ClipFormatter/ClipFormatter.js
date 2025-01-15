@@ -24,7 +24,7 @@ const ClipFormatter = () => {
     const handleReportError = async (clip, error_type) => {
         console.log('clip', clip)
         
-        const res = await fetch('http://127.0.0.1:5000/api/error', {
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/error`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
