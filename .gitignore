@@ -10,7 +10,7 @@ frontend/build/
 backend/venv/
 backend/class-notes/
 backend/build/
-backend/logs.csv
+backend/logs
 *.pyc
 __pycache__/
 *.log
