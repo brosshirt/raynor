@@ -29,10 +29,10 @@
 
 #### Next steps
 1. Set up https
-2. Get a logo
-3. Come up with a UI that meets current requirements but is extendable
+2. Come up with a UI that meets current requirements but is extendable
     - Need to get tailwind set up
     - Hard to strike balance between getting it done and learning
+3. Get a logo
 
 #### What was actually requested
 
