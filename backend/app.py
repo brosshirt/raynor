@@ -40,7 +40,7 @@ def static_proxy(path):
 @app.route('/api/error', methods=['GET'])
 def get_errors():
     if not os.path.exists('logs/logs.csv'):
-        return jsonify({'error': 'logs/logs.csv is missing on backend'}), 404
+        return jsonify({'error': 'logs/logs.csv is missing on backend'}), 500
 
     return send_file(
         'logs/logs.csv',
