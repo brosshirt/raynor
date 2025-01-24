@@ -28,7 +28,8 @@
 4. docker-compose up --build 
 
 #### Next steps
-1. Set up https
+1. Come up with a scheme so that you have your docker files and nginx and all that under source control
+    - I think later on we should have a docker-compose.yml for development (for testing rather than development) but that's after we launch v2, I wanna get something out quickly
 2. Get a logo
 3. Come up with a UI that meets current requirements but is extendable
     - Need to get tailwind set up

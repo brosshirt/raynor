@@ -1,9 +1,13 @@
-version: '3'
+
 services:
   nginx:
     build: ./nginx
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     depends_on:
       - frontend
       - backend
@@ -14,10 +18,16 @@ services:
       - backend
     environment:
       - NODE_ENV=production
-      # - REACT_APP_BACKEND_URL=http://localhost
 
   backend:
     build: ./backend
     volumes:
       - ./backend/logs:/app/logs
+
+  certbot:
+    container_name: certbot
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
 
