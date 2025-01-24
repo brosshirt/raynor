@@ -3,15 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { articleInfoToHTML } from '@/lib/clipFormatter';
 import { ArticleInfo } from '@/lib/types';
 
-interface ClipData {
-  publication?: string;
-  article_link?: string;
-  // any other fields
-}
 
 interface ClipProps {
-  clip: ArticleInfo;
-  reportError: (clip: ClipData, errorType: string) => void;
+  clip: ArticleInfo | undefined;
+  reportError: (clip: ArticleInfo, errorType: string) => void;
 }
 
 export default function Clip({ clip, reportError }: ClipProps) {

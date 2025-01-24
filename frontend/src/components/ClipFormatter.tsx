@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import ClipSearchBar from './ClipSearchBar';
 import Clip from './Clip';
 import { getClip } from '@/lib/clipFormatter';
+import { ArticleInfo } from '@/lib/types';
 
 export default function ClipFormatter() {
   const [link, setLink] = useState('');
-  const [clip, setClip] = useState<any | undefined>();
+  const [clip, setClip] = useState<ArticleInfo | undefined>();
 
   const generateClip = async () => {
     const newClip = await getClip(link);
@@ -14,7 +15,7 @@ export default function ClipFormatter() {
     setLink('');
   };
 
-  const handleReportError = async (clipData: any, errorType: string) => {
+  const handleReportError = async (clipData: ArticleInfo, errorType: string) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/error`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

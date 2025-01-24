@@ -1,6 +1,6 @@
-import Image from "next/image";
+
 import ClipFormatter from "@/components/ClipFormatter";
-import Link from "next/link";
+
 
 
 
