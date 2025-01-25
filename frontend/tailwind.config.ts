@@ -12,15 +12,8 @@ export default {
   plugins: [
     require('daisyui')
   ],
-  daisyui: {  // Add this section
-    themes: [
-      {
-        light: {
-          "base-100": "#ffffff",
-          "base-content": "#000000"
-        }
-      }
-    ],
-    darkTheme: "light"
+  daisyui: {  
+    themes: ["light", "dark", "cupcake", "corporate", "wireframe"],
+    darkTheme: "wireframe"
   }
 } satisfies Config;
