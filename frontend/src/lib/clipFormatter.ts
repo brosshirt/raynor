@@ -3,7 +3,9 @@ import { ArticleInfo } from "./types"
 export async function getClip(link: string) {
   console.log('getClip')
 
-  console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
+  console.log('backend_url', process.env.NEXT_PUBLIC_BACKEND_URL)
+
+  console.log('link', link)
 
   try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/clip-format`, {
@@ -29,7 +31,7 @@ export async function getClip(link: string) {
 
 
 
-export function articleInfoToHTML(articleInfo: ArticleInfo){
+export function articleInfoToHtml(articleInfo: ArticleInfo): { __html: string; }{
   
   
   console.log('articleInfoToHtml', articleInfo)
@@ -40,8 +42,8 @@ export function articleInfoToHTML(articleInfo: ArticleInfo){
   const articleLink = articleInfo.article_link || "#"; // Assuming article_link is part of the JSON
 
   const clip = `
-      <b><a href="${articleLink}">${title}</a> - ${publication} - ${publicationDate}</b><br>
+      <b><a style="color:blue; text-decoration: underline" href="${articleLink}">${title}</a> - ${publication} - ${publicationDate}</b><br>
       <i>By ${authors}</i>
   `;
-  return clip;
+  return {__html: clip};
 }

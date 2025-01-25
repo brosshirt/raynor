@@ -1,9 +1,10 @@
 'use client';
 import React, { useState } from 'react';
 import ClipSearchBar from './ClipSearchBar';
-import Clip from '../Clip';
+import Clip from './ClipsDisplay';
 import { getClip } from '@/lib/clipFormatter';
 import { ArticleInfo } from '@/lib/types';
+import ClipsDisplay from './ClipsDisplay';
 
 export default function ClipsMainContent() {
   const [link, setLink] = useState('');
@@ -31,9 +32,9 @@ export default function ClipsMainContent() {
   };
 
   return (
-    <div>
+    <div className='space-y-4'>
         <ClipSearchBar link={link} setLink={setLink} generateClip={generateClip} />
-        
+        <ClipsDisplay clip={clip} reportError={handleReportError}/>
     </div>
   )
 
