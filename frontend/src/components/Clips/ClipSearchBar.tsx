@@ -9,17 +9,13 @@ interface ClipSearchBarProps {
 
 export default function ClipSearchBar({ link, setLink, generateClip }: ClipSearchBarProps) {
   return (
-    <div className="w-4/5 h-1/5 flex items-center justify-center gap-2">
-      <input
-        type="text"
-        placeholder="Paste Article Link"
-        value={link}
-        onChange={(e) => setLink(e.target.value)}
-        className="flex-[3] border border-black rounded p-0 leading-none h-1/2"
-      />
+    <div className="flex gap-2 pt-10">
+      <div className="form-control">
+        <input type="text" placeholder="Paste URL" className="input input-bordered w-72 h-8" />
+      </div>
       <button
         onClick={generateClip}
-        className="btn btn-primary"
+        className="btn btn-sm"
       >
         Send
       </button>

@@ -9,6 +9,11 @@ export default {
   theme: {
 
   },
+  variants: {
+    extend: {
+      display: ["group-hover"],
+    }
+  },
   plugins: [
     require('daisyui')
   ],
