@@ -7,7 +7,7 @@ import ClipRow from './ClipRow';
 
 interface ClipProps {
   clip: ArticleInfo | undefined;
-  reportError: (clip: ArticleInfo, errorType: string) => void;
+  reportError: (errorType: string) => void;
 }
 
 export default function ClipsDisplay({ clip, reportError }: ClipProps) {
@@ -28,6 +28,10 @@ export default function ClipsDisplay({ clip, reportError }: ClipProps) {
     navigator.clipboard.write([clipboardItem]);
   };
 
+  const reportErrorTest = () => {
+    console.log('param')
+  }
+
   return (
     <div className="overflow-x-auto">
       <table className="table">
@@ -40,27 +44,9 @@ export default function ClipsDisplay({ clip, reportError }: ClipProps) {
           </tr>
         </thead>
         <tbody>
-          <ClipRow formattedClipHtml={formattedClipHtml}/>
+          <ClipRow formattedClipHtml={formattedClipHtml} onCopy={handleCopy} reportError={reportError}/>
         </tbody>
       </table>
     </div>
-    // <div className="border border-black rounded w-full h-1/2 flex items-center gap-2 p-2">
-    //   <span className="flex-[10]" dangerouslySetInnerHTML={{ __html: formattedClipHTML }} />
-    //   <button className="flex-[1] h-5 border border-black rounded cursor-pointer" onClick={handleCopy}>
-    //     Copy
-    //   </button>
-    //   <button
-    //     className="flex-[1] h-5 border border-black rounded cursor-pointer"
-    //     onClick={() => clip && reportError(clip, 'copy paste')}
-    //   >
-    //     copy/paste error
-    //   </button>
-    //   <button
-    //     className="flex-[1] h-5 border border-black rounded cursor-pointer"
-    //     onClick={() => clip && reportError(clip, 'clip generation')}
-    //   >
-    //     🚩
-    //   </button>
-    // </div>
   );
 }

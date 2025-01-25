@@ -17,7 +17,7 @@ export default function ClipSearchBar({ link, setLink, generateClip }: ClipSearc
         onClick={generateClip}
         className="btn btn-sm"
       >
-        Send
+        Get Clip
       </button>
     </div>
   );

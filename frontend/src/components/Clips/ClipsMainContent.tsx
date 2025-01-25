@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from 'react';
 import ClipSearchBar from './ClipSearchBar';
-import Clip from './ClipsDisplay';
 import { getClip } from '@/lib/clipFormatter';
 import { ArticleInfo } from '@/lib/types';
 import ClipsDisplay from './ClipsDisplay';
@@ -16,19 +15,20 @@ export default function ClipsMainContent() {
     setLink('');
   };
 
-  const handleReportError = async (clipData: ArticleInfo, errorType: string) => {
+  const handleReportError = async (errorType: string) => {
+    console.log('reporting error')
+
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/error`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         error_type: errorType,
-        publication: clipData.publication,
-        article_link: clipData.article_link,
+        publication: clip!.publication,
+        article_link: clip!.article_link,
         error_message: '',
       }),
     });
     const data = await res.json();
-    console.log('backendResponse', data);
   };
 
   return (
@@ -38,10 +38,4 @@ export default function ClipsMainContent() {
     </div>
   )
 
-//   return (
-//     <div className="h-[80%] w-1/2 flex flex-col items-center justify-center">
-//       <ClipSearchBar link={link} setLink={setLink} generateClip={generateClip} />
-//       <Clip clip={clip} reportError={handleReportError} />
-//     </div>
-//   );
 }
