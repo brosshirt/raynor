@@ -19,7 +19,7 @@ export default function ClipSearchBar({ link, setLink, generateClip }: ClipSearc
       />
       <button
         onClick={generateClip}
-        className="flex-[1] border border-black rounded-lg h-1/2 cursor-pointer p-0 leading-none"
+        className="btn btn-primary"
       >
         Send
       </button>

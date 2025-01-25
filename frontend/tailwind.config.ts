@@ -9,5 +9,18 @@ export default {
   theme: {
 
   },
-  plugins: [],
+  plugins: [
+    require('daisyui')
+  ],
+  daisyui: {  // Add this section
+    themes: [
+      {
+        light: {
+          "base-100": "#ffffff",
+          "base-content": "#000000"
+        }
+      }
+    ],
+    darkTheme: "light"
+  }
 } satisfies Config;
