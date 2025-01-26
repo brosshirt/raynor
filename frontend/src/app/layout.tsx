@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme='cupcake'>
+    <html lang="en" data-theme='corporate'>
       <head>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>

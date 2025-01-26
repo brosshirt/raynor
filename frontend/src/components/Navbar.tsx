@@ -13,7 +13,7 @@ const Navbar = () => {
             <li><a>Clips</a></li>
             <li><a>Article Summary</a></li>
             <li><a>Chat with documents</a></li>
-            <li><a href='https://www.youtube.com/watch?v=_o7qjN3KF8U' target="_blank">Funny video of the week</a></li>
+            <li><a href='https://www.youtube.com/watch?v=_o7qjN3KF8U' target="_blank">Video of the week</a></li>
         </ul>
         </div>
     </div>

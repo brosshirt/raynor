@@ -1,31 +1,22 @@
 import { ArticleInfo } from "./types"
 
 export async function getClip(link: string) {
-  console.log('getClip')
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/clip-format`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({article_link: link})
+  })
 
-  console.log('backend_url', process.env.NEXT_PUBLIC_BACKEND_URL)
+  const clip = await response.json()
 
-  console.log('link', link)
-
-  try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/clip-format`, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({article_link: link})
-      })
-
-      const clip = await response.json()
-
-      if (clip.error){
-          throw new Error(clip.error)
-      }
-      return clip
-  } catch(error){
-      console.error('Error fetching clip:', error)
-      return 'Error fetching clip: ' + error
+  if (clip.error){
+    console.log('error response from backend on /clip-format', clip.error)
+    throw new Error(clip.error)
   }
+
+  return clip
 }
 
 

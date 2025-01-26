@@ -28,10 +28,6 @@ export default function ClipsDisplay({ clip, reportError }: ClipProps) {
     navigator.clipboard.write([clipboardItem]);
   };
 
-  const reportErrorTest = () => {
-    console.log('param')
-  }
-
   return (
     <div className="overflow-x-auto">
       <table className="table">

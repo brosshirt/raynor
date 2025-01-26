@@ -2,7 +2,7 @@ import React from 'react'
 
 const ThreeDots = () => {
   return (
-    <button className="btn btn-square btn-ghost hover:bg-transparent hover:text-neutral hidden group-hover:block absolute right-0">
+    <button className="btn btn-square btn-ghost hover:bg-transparent hover:text-neutral-content hidden group-hover:block absolute right-0">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
