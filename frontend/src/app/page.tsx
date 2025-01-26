@@ -1,5 +1,4 @@
 
-import ClipFormatter from "@/components/ClipFormatter";
 import Clips from '@/components/Clips/Clips'
 
 

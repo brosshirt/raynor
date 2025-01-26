@@ -9,9 +9,7 @@ interface ClipRowProps {
 }
 
 const ClipRow = ({formattedClipHtml, onCopy, reportError}: ClipRowProps) => {
-  const reportErrorTest = (param: string) => {
-    console.log('param', param)
-  }
+
   
   
   return (
