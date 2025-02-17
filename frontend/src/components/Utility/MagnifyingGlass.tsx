@@ -1,5 +1,8 @@
 import React from 'react'
 
+
+
+
 const MagnifyingGlass = () => {
   return (
     <button className="btn btn-ghost">

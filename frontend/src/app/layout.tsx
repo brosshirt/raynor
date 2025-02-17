@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   description: "Suite of Public Affairs tools",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{

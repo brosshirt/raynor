@@ -1,4 +1,5 @@
 import { ArticleInfo } from "./types"
+import {db, Clip} from '@/db'
 
 export async function getClip(link: string) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/clip-format`, {
@@ -16,25 +17,25 @@ export async function getClip(link: string) {
     throw new Error(clip.error)
   }
 
+
   return clip
 }
 
 
 
 
-export function articleInfoToHtml(articleInfo: ArticleInfo): { __html: string; }{
+export function articleInfoToHtml(clip: Clip): { __html: string; }{
   
   
-  console.log('articleInfoToHtml', articleInfo)
-  const title = articleInfo.title;
-  const publication = articleInfo.publication;
-  const publicationDate = articleInfo.publication_date;
-  const authors = articleInfo.authors.join(", ");
-  const articleLink = articleInfo.article_link || "#"; // Assuming article_link is part of the JSON
+  const title = clip.title;
+  const publication = clip.publication;
+  const publicationDate = clip.publication_date;
+  const authors = clip.authors.join(", ");
+  const articleLink = clip.article_link || "#"; 
 
-  const clip = `
+  const clipHtml = `
       <b><a style="color:blue; text-decoration: underline" href="${articleLink}">${title}</a> - ${publication} - ${publicationDate}</b><br>
       <i>By ${authors}</i>
   `;
-  return {__html: clip};
+  return {__html: clipHtml};
 }

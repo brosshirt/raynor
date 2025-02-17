@@ -1,25 +1,64 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import CopyButton from '../Utility/CopyButton'
+import { Trash } from 'lucide-react'
+import { articleInfoToHtml } from '@/lib/clipFormatter'
+import { Clip } from '@/db'
 
 
 interface ClipRowProps {
-    formattedClipHtml: { __html: string},
-    onCopy: () => void
-    reportError: (errorType: string) => void
+    clip: Clip
+    deleteClip: (articleLink:string) => void
 }
 
-const ClipRow = ({formattedClipHtml, onCopy, reportError}: ClipRowProps) => {
+const ClipRow = ({clip, deleteClip }: ClipRowProps) => {
+  const [formattedClipHtml, setFormattedClipHtml] = useState<{ __html: string }>({__html: ''});
 
+  useEffect(() => {
+    if (clip) {
+      const html = articleInfoToHtml(clip);
+      setFormattedClipHtml(html);
+    }
+  }, [clip]);
+
+  const handleCopy = () => {
+    const clipboardItem = new ClipboardItem({
+      'text/html': new Blob([formattedClipHtml.__html], { type: 'text/html' }),
+      'text/plain': new Blob([formattedClipHtml.__html], { type: 'text/plain' }),
+    });
+    navigator.clipboard.write([clipboardItem]);
+  };
+
+
+  const handleReportError = async (errorType: string) => {
+    console.log('reporting error')
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/error`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        error_type: errorType,
+        publication: clip!.publication,
+        article_link: clip!.article_link,
+        error_message: '',
+      }),
+    });
+    const data = await res.json();
+    if (data.error){
+      throw new Error(data.error)
+    }
+    console.log('backend response', data)
+  };
   
   
   return (
     <tr>
         <td className='w-96 relative'>
             <div className='' dangerouslySetInnerHTML={formattedClipHtml}></div>
-            <CopyButton onCopy={onCopy}/>
+            <CopyButton onCopy={handleCopy}/>
         </td>
-        <td><button className='btn btn-ghost' onClick={() => reportError('copy paste')}>🚩</button></td>
-        <td><button className='btn btn-ghost' onClick={() => reportError('link generation')}>🚩</button></td>
+        <td><button className='btn btn-ghost' onClick={() => handleReportError('copy paste')}>🚩</button></td>
+        <td><button className='btn btn-ghost' onClick={() => handleReportError('link generation')}>🚩</button></td>
+        <td><button className='btn btn-ghost' onClick={() => deleteClip(clip.article_link)}><Trash/></button></td>
     </tr>
   )
 }

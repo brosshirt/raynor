@@ -2,18 +2,35 @@
 import React, { useState } from 'react';
 import ClipSearchBar from './ClipSearchBar';
 import { getClip } from '@/lib/clipFormatter';
-import { ArticleInfo } from '@/lib/types';
 import ClipsDisplay from './ClipsDisplay';
+import {db} from '@/db'
+import { useLiveQuery } from 'dexie-react-hooks';
 
-export default function ClipsMainContent() {
+interface ClipsMainContent {
+  selectedFolderId: number
+}
+
+
+export default function ClipsMainContent({ selectedFolderId }: ClipsMainContent) {
   const [link, setLink] = useState('');
-  const [clip, setClip] = useState<ArticleInfo | undefined>();
   const [error, setError] = useState('')
+
+  const clips = useLiveQuery(async () => {
+    
+    const folder = await db.clipFolders.get(selectedFolderId)
+    const clips = folder?.clips
+
+    return clips
+  },[selectedFolderId])
 
   const generateClip = async () => {
     try {
       const newClip = await getClip(link);
-      setClip(newClip);
+
+      await db.clipFolders.update(selectedFolderId, {
+        clips: clips ? [...clips, newClip] : [newClip]
+      })
+
       setLink('');
       setError('')
     } catch(error){
@@ -24,35 +41,23 @@ export default function ClipsMainContent() {
     }
   };
 
-  const handleReportError = async (errorType: string) => {
-    console.log('reporting error')
+  const deleteClip = async (articleLink: string) => {
+    await db.clipFolders.update(selectedFolderId, {
+      clips: clips ? clips.filter(clip => clip.article_link !== articleLink): []
+    })
+  }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/error`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        error_type: errorType,
-        publication: clip!.publication,
-        article_link: clip!.article_link,
-        error_message: '',
-      }),
-    });
-    const data = await res.json();
-    if (data.error){
-      throw new Error(data.error)
-    }
-    console.log('backend response', data)
-  };
+
 
   return (
     <div className='space-y-4'>
-        <ClipSearchBar link={link} setLink={setLink} generateClip={generateClip} />
+        <ClipSearchBar link={link} setLink={setLink} generateClip={generateClip} clips={clips} />
         {error && (
           <div className='text-error'>
             {error}
           </div>
         )}
-        <ClipsDisplay clip={clip} reportError={handleReportError}/>
+        <ClipsDisplay clips={clips} deleteClip={deleteClip} />
     </div>
   )
 

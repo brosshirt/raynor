@@ -1,8 +1,12 @@
 import React from 'react'
 
-const PenPaper = () => {
+interface PenPaperProps{
+  onClick: () => void
+}
+
+const PenPaper = ({onClick}: PenPaperProps) => {
   return (
-    <button className="btn btn-ghost">
+    <button onClick = {onClick}className="btn btn-ghost">
         <svg 
             width="18" height="18" 
             viewBox="0 0 48 48" 

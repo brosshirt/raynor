@@ -15,7 +15,7 @@ from playwright.sync_api import sync_playwright
 before_browser_launch = datetime.now()
 playwright = sync_playwright().start()
 browser = playwright.chromium.launch(headless=True)
-context = browser.new_context(user_agent="Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.6533.17 Safari/537.36")
+context = browser.new_context(user_agent="Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.6533.17 Safari/537.36", java_script_enabled=True)
 page = context.new_page()
 print("Time to load initial page ", datetime.now() - before_browser_launch, flush=True)
 
@@ -83,6 +83,7 @@ def clip_format():
 
         # Title, author, publication, publication_date, and link
         result = get_gpt_news_info(article_text, openai_client)
+
         result["article_link"] = article_link
 
         return jsonify(result)
