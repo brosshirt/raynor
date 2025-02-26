@@ -9,13 +9,31 @@ import { useLiveQuery } from 'dexie-react-hooks'
 
 
 const Clips = () => {
+  const [selectedFolderId, setSelectedFolderId] = useState<number>(1)
+  
   const folders = useLiveQuery(async () => {
-    const output = await db.clipFolders.toArray()
-    console.log(output)
     return db.clipFolders.toArray()
   })
 
-  const [selectedFolderId, setSelectedFolderId] = useState<number>(1)
+  useEffect(() => {
+    const initClips = async () => {
+      const clipFolders = await db.clipFolders.toArray()
+      if (clipFolders.length === 0){
+        const id = await db.clipFolders.put({
+          title: "New Folder",
+          date: new Date(),
+          clips: []
+        })
+        setSelectedFolderId(id)
+      }
+      else {
+        setSelectedFolderId(clipFolders[0].id)
+      }
+    }
+    initClips()
+  }, [])
+
+  
   
 
   return (

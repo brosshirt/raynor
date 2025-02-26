@@ -1,6 +1,6 @@
 'use client'
 
-import React, { SetStateAction, useState } from 'react'
+import React, { SetStateAction, useState, useEffect } from 'react'
 import ThreeDots from '../Utility/ThreeDots'
 import PenPaper from '../Utility/PenPaper'
 import MagnifyingGlass from '../Utility/MagnifyingGlass'
@@ -16,7 +16,6 @@ interface SidebarProps {
 const Sidebar = ({ folders, selectedFolderId, setSelectedFolderId}: SidebarProps) => {
   const [folderBeingRenamed, setFolderBeingRenamed] = useState<number | undefined>()
   const [newFolderName, setNewFolderName] = useState('') 
-
 
   const createFolder = async () => {
     // this will allow us to create a new folder
