@@ -1,6 +1,6 @@
 'use client'
 
-import React, { SetStateAction, useState, useEffect } from 'react'
+import React, { SetStateAction, useState, useRef, useEffect } from 'react'
 import ThreeDots from '../Utility/ThreeDots'
 import PenPaper from '../Utility/PenPaper'
 import MagnifyingGlass from '../Utility/MagnifyingGlass'
@@ -16,6 +16,29 @@ interface SidebarProps {
 const Sidebar = ({ folders, selectedFolderId, setSelectedFolderId}: SidebarProps) => {
   const [folderBeingRenamed, setFolderBeingRenamed] = useState<number | undefined>()
   const [newFolderName, setNewFolderName] = useState('') 
+
+  const folderNameInput = useRef<HTMLInputElement>(null)
+  
+
+  useEffect(() => {
+    const undoRenaming = (e: MouseEvent) => {
+      if (!folderNameInput.current?.contains(e.target as Node)){
+        console.log('undoing rename')
+        setFolderBeingRenamed(undefined)
+      }
+    }
+
+    if (folderBeingRenamed){
+      document.addEventListener('click', undoRenaming)
+    }
+
+
+    return () => {
+      document.removeEventListener('click', undoRenaming)
+    }    
+  }, [folderBeingRenamed])
+
+
 
   const createFolder = async () => {
     // this will allow us to create a new folder
@@ -75,7 +98,7 @@ const Sidebar = ({ folders, selectedFolderId, setSelectedFolderId}: SidebarProps
           >
             <div className='flex justify-between items-center h-full w-full'>
               {folderBeingRenamed === folder.id ? (
-                <input autoFocus onKeyDown={handleInputKeyDown} type="text" value={newFolderName} onChange={(e) => setNewFolderName(e.currentTarget.value)} 
+                <input autoFocus ref={folderNameInput} onKeyDown={handleInputKeyDown} type="text" value={newFolderName} onChange={(e) => setNewFolderName(e.currentTarget.value)} 
                   className='w-full'
                 />
               ) : (
