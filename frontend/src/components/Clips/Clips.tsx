@@ -37,7 +37,7 @@ const Clips = () => {
   
 
   return (
-    <div className='w-screen flex h-[100%] gap-8'>
+    <div className='w-screen flex h-[100%] gap-8' >
       <Sidebar selectedFolderId={selectedFolderId} setSelectedFolderId={setSelectedFolderId} folders={folders}/>
       <ClipsMainContent selectedFolderId={selectedFolderId}/>
     </div>

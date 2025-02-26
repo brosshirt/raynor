@@ -18,7 +18,7 @@ export default function ClipsDisplay({ clips, deleteClip }: ClipProps) {
       <table className="table">
         
         <thead>
-          <tr>
+          <tr className='text-base-content'>
             <th>Clip</th>
             <th>Report Error</th>
             <th>Delete Clip</th>

@@ -92,7 +92,7 @@ const Sidebar = ({ folders, selectedFolderId, setSelectedFolderId}: SidebarProps
 
       {folders?.map(folder => (
         <li
-          className={`p-2 hover:cursor-pointer hover:bg-base-300 w-full h-9 ${folder.id === selectedFolderId ? 'bg-gray-300': ''}`}
+          className={`p-2 hover:cursor-pointer hover:bg-base-300 w-full h-9 ${folder.id === selectedFolderId ? 'bg-base-300': ''}`}
           onClick={() => setSelectedFolderId(folder.id)}
           key={folder.id}
           >
