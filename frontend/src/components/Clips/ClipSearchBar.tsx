@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import { useState } from 'react';
 import { Clip } from '@/db';
 import { articleInfoToHtml } from '@/lib/clipFormatter';
 
@@ -8,12 +8,13 @@ interface ClipSearchBarProps {
   setLink: (value: string) => void;
   generateClip: () => void;
   clips: Clip[] | undefined
+  isLoading: boolean
 }
 
-export default function ClipSearchBar({ link, setLink, generateClip, clips }: ClipSearchBarProps) {
+export default function ClipSearchBar({ link, setLink, generateClip, clips, isLoading }: ClipSearchBarProps) {
+  const [isCopied, setIsCopied] = useState(false)
   
-  
-  const copyClips = () => {
+  const copyClips = async () => {
     if (!clips){
       return
     }
@@ -33,25 +34,30 @@ export default function ClipSearchBar({ link, setLink, generateClip, clips }: Cl
     });
     navigator.clipboard.write([clipboardItem]);
 
+    setIsCopied(true)
+    await setTimeout(() => setIsCopied(false), 1000)
+
   }
   
   
   return (
     <div className="flex gap-2 pt-10">
       <div className="form-control">
-        <input type="text" placeholder="Paste URL" className="input input-bordered w-72 h-8" value={link} onChange={e => setLink(e.target.value)}/>
+        <input type="text" disabled={isLoading} placeholder="Paste URL" className="input input-bordered w-72 h-8" value={link} onChange={e => setLink(e.target.value)}/>
       </div>
       <button
         onClick={generateClip}
+        disabled={isLoading}
         className="btn btn-sm"
       >
         Get Clip
       </button>
       <button
         onClick={copyClips}
+        disabled={isCopied}
         className="btn btn-sm"
       >
-        Copy Clips
+        {isCopied ? 'Copied' : 'Copy Clips'}
       </button>
     </div>
   );

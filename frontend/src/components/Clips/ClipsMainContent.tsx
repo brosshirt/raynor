@@ -14,6 +14,7 @@ interface ClipsMainContent {
 export default function ClipsMainContent({ selectedFolderId }: ClipsMainContent) {
   const [link, setLink] = useState('');
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const clips = useLiveQuery(async () => {
     
@@ -25,6 +26,7 @@ export default function ClipsMainContent({ selectedFolderId }: ClipsMainContent)
 
   const generateClip = async () => {
     try {
+      setIsLoading(true)
       const newClip = await getClip(link);
 
       await db.clipFolders.update(selectedFolderId, {
@@ -33,6 +35,7 @@ export default function ClipsMainContent({ selectedFolderId }: ClipsMainContent)
 
       setLink('');
       setError('')
+      setIsLoading(false)
     } catch(error){
       if (error instanceof Error){
         console.error('error on getClip', error)
@@ -51,7 +54,7 @@ export default function ClipsMainContent({ selectedFolderId }: ClipsMainContent)
 
   return (
     <div className='space-y-4'>
-        <ClipSearchBar link={link} setLink={setLink} generateClip={generateClip} clips={clips} />
+        <ClipSearchBar link={link} setLink={setLink} generateClip={generateClip} clips={clips} isLoading={isLoading} />
         {error && (
           <div className='text-error'>
             {error}
