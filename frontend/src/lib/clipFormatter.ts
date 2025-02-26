@@ -34,8 +34,8 @@ export function articleInfoToHtml(clip: Clip): { __html: string; }{
   const articleLink = clip.article_link || "#"; 
 
   const clipHtml = `
-      <b><a style="color:blue; text-decoration: underline" href="${articleLink}">${title}</a> - ${publication} - ${publicationDate}</b><br>
-      <i>By ${authors}</i>
-  `;
+  <b><a style="" href="${articleLink}">${title}</a> - ${publication} - ${publicationDate}</b><br>
+  <i>By ${authors}</i>
+`;
   return {__html: clipHtml};
 }

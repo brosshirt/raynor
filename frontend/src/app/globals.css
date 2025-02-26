@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 
-
+a {
+  all: revert
+}
 
 /* :root {
   --background: #ffffff;
