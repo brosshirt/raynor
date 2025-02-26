@@ -20,8 +20,7 @@ export default function ClipsDisplay({ clips, deleteClip }: ClipProps) {
         <thead>
           <tr>
             <th>Clip</th>
-            <th>Copy Error</th>
-            <th>Generate Error</th>
+            <th>Report Error</th>
             <th>Delete Clip</th>
           </tr>
         </thead>

@@ -35,7 +35,7 @@ export default function ClipSearchBar({ link, setLink, generateClip, clips, isLo
     navigator.clipboard.write([clipboardItem]);
 
     setIsCopied(true)
-    await setTimeout(() => setIsCopied(false), 1000)
+    setTimeout(() => setIsCopied(false), 1000)
 
   }
   

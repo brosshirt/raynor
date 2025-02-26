@@ -13,6 +13,8 @@ interface ClipRowProps {
 const ClipRow = ({clip, deleteClip }: ClipRowProps) => {
   const [formattedClipHtml, setFormattedClipHtml] = useState<{ __html: string }>({__html: ''});
 
+  const [errorReported, setErrorReported] = useState(false)
+
   useEffect(() => {
     if (clip) {
       const html = articleInfoToHtml(clip);
@@ -30,7 +32,7 @@ const ClipRow = ({clip, deleteClip }: ClipRowProps) => {
 
 
   const handleReportError = async (errorType: string) => {
-    console.log('reporting error')
+    setErrorReported(true)
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/error`, {
       method: 'POST',
@@ -43,7 +45,9 @@ const ClipRow = ({clip, deleteClip }: ClipRowProps) => {
       }),
     });
     const data = await res.json();
+    setTimeout(() => setErrorReported(false), 1000)
     if (data.error){
+      setTimeout(() => setErrorReported(false), 1000)
       throw new Error(data.error)
     }
     console.log('backend response', data)
@@ -56,8 +60,7 @@ const ClipRow = ({clip, deleteClip }: ClipRowProps) => {
             <div className='' dangerouslySetInnerHTML={formattedClipHtml}></div>
             <CopyButton onCopy={handleCopy}/>
         </td>
-        <td><button className='btn btn-ghost' onClick={() => handleReportError('copy paste')}>🚩</button></td>
-        <td><button className='btn btn-ghost' onClick={() => handleReportError('link generation')}>🚩</button></td>
+        <td><button className='btn btn-ghost' disabled={errorReported} onClick={() => handleReportError('link generation')}>🚩</button></td>
         <td><button className='btn btn-ghost' onClick={() => deleteClip(clip.article_link)}><Trash/></button></td>
     </tr>
   )

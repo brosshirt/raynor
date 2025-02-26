@@ -40,6 +40,7 @@ export default function ClipsMainContent({ selectedFolderId }: ClipsMainContent)
       if (error instanceof Error){
         console.error('error on getClip', error)
         setError(error.message)
+        setIsLoading(false)
       }
     }
   };
