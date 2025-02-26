@@ -13,14 +13,18 @@ interface ThreeDotsProps {
 const ThreeDots = ({onRename, onDelete, onClear }: ThreeDotsProps) => {
 
 
-  const stopPropogation = (e: React.MouseEvent<HTMLDivElement>) => {
+
+
+  const deployFuncWithoutPropogation = (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>, func: () => void) => {
     e.stopPropagation()
+    func()
   }
+
   
   
   return (
     <div  className="dropdown dropdown-right hover:bg-transparent">
-      <div onClick={stopPropogation} tabIndex={0}  role="button" className="btn btn-square btn-ghost hover:bg-transparent hover:text-neutral-content no-animation h-full">
+      <div onClick={(e) => e.stopPropagation()} tabIndex={0}  role="button" className="btn btn-square btn-ghost hover:bg-transparent hover:text-neutral-content no-animation h-full">
         <svg
           tabIndex={0}
           xmlns="http://www.w3.org/2000/svg"
@@ -35,9 +39,9 @@ const ThreeDots = ({onRename, onDelete, onClear }: ThreeDotsProps) => {
         </svg>
       </div>
       <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-        <li><button onClick={onRename}>Rename</button></li>
-        <li><button onClick={onDelete}>Delete</button></li>
-        <li><button onClick={onClear}>Clear</button></li>
+        <li><button onClick={(e) => deployFuncWithoutPropogation(e, onRename)}>Rename</button></li>
+        <li><button onClick={(e) => deployFuncWithoutPropogation(e, onDelete)}>Delete</button></li>
+        <li><button onClick={(e) => deployFuncWithoutPropogation(e, onClear)}>Clear</button></li>
       </ul>
     </div>
   )
