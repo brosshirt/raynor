@@ -18,7 +18,8 @@ const Clips = () => {
   useEffect(() => {
     const initClips = async () => {
       const clipFolders = await db.clipFolders.toArray()
-      if (clipFolders.length === 0){
+      
+      if (clipFolders.length === 0){ // create an initial folder
         const id = await db.clipFolders.put({
           title: "New Folder",
           date: new Date(),
@@ -27,7 +28,7 @@ const Clips = () => {
         setSelectedFolderId(id)
       }
       else {
-        setSelectedFolderId(clipFolders[0].id)
+        setSelectedFolderId(clipFolders[0].id) // set the selected folder to the first folder in the list
       }
     }
     initClips()

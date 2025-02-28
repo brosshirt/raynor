@@ -11,8 +11,11 @@ interface ClipProps {
   deleteClip: (articleLink: string) => void
 }
 
+
+
 export default function ClipsDisplay({ clips, deleteClip }: ClipProps) {
   
+
   return (
     <div className="overflow-x-auto">
       <table className="table">
@@ -25,7 +28,7 @@ export default function ClipsDisplay({ clips, deleteClip }: ClipProps) {
           </tr>
         </thead>
         <tbody>
-          {clips?.map(clip => (
+          {clips?.slice().reverse().map(clip => (
             <ClipRow 
               clip={clip}
               key={clip.title}
