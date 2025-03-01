@@ -9,6 +9,8 @@ import asyncio
 from pyppeteer import launch
 from playwright.sync_api import sync_playwright
 from datetime import datetime
+import requests
+from base64 import b64decode
 
 from newspaper import Article
 from bs4 import BeautifulSoup
@@ -20,8 +22,8 @@ Your task is to extract 4 pieces of information and return them in a JSON format
 
 I want you to extract the title, authors, publication, and publication_date and return them in JSON. Do not, under any circumstances, return something that cannot be parsed directly into JSON. Don't respond with any conversational text. Do not respond with something wrapped in triple quotes. Your entire response must be valid JSON. 
 
-title: This should be written exactly as it is in the article, unless the article has it in all caps, in which case you should use capitalize it according to standard capitalization protocols for a new article
-authors: This is a list of strings where the strings are the first and last names of the authors. The authors should always be in normal title case with the first letters of the first and last names capitalized. Do not put them in all caps even if they are that way in the article.
+title: This should be written exactly as it is in the article, unless the article has it in all caps, in which case you should capitalize it according to standard capitalization protocols for a new article
+authors: This is a list of strings where the strings are the first and last names of the authors. The authors should always be in normal title case with the first letters of the first and last names capitalized. Do not put them in all caps even if they are that way in the article. If there are no listed human authors to the article, use your best judgment when selecting an author, it may be a group.
 publication: the organization releasing the article
 publication_date: Should be in a format like "July 8, 2024", ignore any time of day information. Do not confuse a date presented in the body of the article or as a caption to an image with the date of the article.
 """
@@ -43,14 +45,34 @@ def get_gpt_news_info(article_text, client):
 
 
 def get_article_text(article_link, page):
-    # Disable images
-    page.route("**/*", lambda route, request: route.abort() if request.resource_type in ["image", "stylesheet", "font", "script"] else route.continue_())
+    # # Disable images
+    # page.route("**/*", lambda route, request: route.abort() if request.resource_type in ["image", "stylesheet", "font", "script"] else route.continue_())
 
-    page.goto(article_link)
+    # page.goto(article_link)
 
-    html = page.content()
+    # html = page.content()
 
-    soup = BeautifulSoup(html, 'html.parser')
+    try:
+        api_response = requests.post(
+            "https://api.zyte.com/v1/extract",
+            auth=("2c1f1d5621eb4240998e17ee7527e35d", ""),
+            json={
+                "url": article_link,
+                "httpResponseBody": True,
+            },
+        )
+
+        html: bytes = b64decode(api_response.json()["httpResponseBody"])
+    except Exception as e:
+        logging.error(f"Error zyte api request: {str(e)}. Link: {article_link}")
+        raise Exception(f"Error zyte api request: {str(e)}") 
+
+    try:
+        soup = BeautifulSoup(html, 'html.parser')
+    except Exception as e:
+        logging.error(f"Error parsing zyte html: {str(e)}. Link: {article_link}")
+        raise Exception(f"Error parsing zyte html: {str(e)}") 
+
     return soup.get_text()
 
 
