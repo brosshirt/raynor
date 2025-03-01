@@ -1,9 +1,6 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import { articleInfoToHtml } from '@/lib/clipFormatter';
 import { Clip } from '@/db';
 import ClipRow from './ClipRow';
-import { db } from '@/db';
 
 
 interface ClipProps {

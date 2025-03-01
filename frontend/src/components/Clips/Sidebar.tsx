@@ -3,9 +3,7 @@
 import React, { SetStateAction, useState, useRef, useEffect } from 'react'
 import ThreeDots from '../Utility/ThreeDots'
 import PenPaper from '../Utility/PenPaper'
-import MagnifyingGlass from '../Utility/MagnifyingGlass'
 import { db, ClipFolder } from '@/db'
-import { useLiveQuery } from 'dexie-react-hooks'
 
 interface SidebarProps {
   folders: ClipFolder[] | undefined

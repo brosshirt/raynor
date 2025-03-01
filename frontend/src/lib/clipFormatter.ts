@@ -1,5 +1,5 @@
-import { ArticleInfo } from "./types"
-import {db, Clip} from '@/db'
+
+import {Clip} from '@/db'
 
 export async function getClip(link: string) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/clip-format`, {

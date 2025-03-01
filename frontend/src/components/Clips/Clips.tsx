@@ -4,7 +4,7 @@
 import React, {useState, useEffect} from 'react'
 import Sidebar from './Sidebar'
 import ClipsMainContent from './ClipsMainContent'
-import {db, ClipFolder} from '@/db'
+import {db} from '@/db'
 import { useLiveQuery } from 'dexie-react-hooks'
 
 
