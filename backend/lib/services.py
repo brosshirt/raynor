@@ -55,7 +55,7 @@ def get_article_text(article_link, page):
     try:
         api_response = requests.post(
             "https://api.zyte.com/v1/extract",
-            auth=("2c1f1d5621eb4240998e17ee7527e35d", ""),
+            auth=(os.getenv('ZYTE_API_KEY'), ""),
             json={
                 "url": article_link,
                 "httpResponseBody": True,
