@@ -25,7 +25,7 @@ I want you to extract the title, authors, publication, and publication_date and 
 title: This should be written exactly as it is in the article, unless the article has it in all caps, in which case you should capitalize it according to standard capitalization protocols for a new article
 authors: This is a list of strings where the strings are the first and last names of the authors. The authors should always be in normal title case with the first letters of the first and last names capitalized. Do not put them in all caps even if they are that way in the article. If there are no listed human authors to the article, use your best judgment when selecting an author, it may be a group.
 publication: the organization releasing the article
-publication_date: Should be in a format like "July 8, 2024", ignore any time of day information. Do not confuse a date presented in the body of the article or as a caption to an image with the date of the article.
+publication_date: Should be in a format like "July 8, 2024", ignore any time of day information. Do not confuse a date presented in the body of the article or as a caption to an image with the date of the article. Do not abbreviate the month of the date.
 """
 
 
