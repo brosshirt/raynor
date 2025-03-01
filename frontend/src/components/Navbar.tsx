@@ -9,7 +9,7 @@ const Navbar = () => {
     <div className="navbar bg-base-100">
         <div className="flex-1">
         <a className="btn btn-ghost text-xl">CommsBot</a>
-        <Image src='commsbot.svg' width={65} height={65} alt="logo"></Image>
+        <Image src='/commsbot-nobg.png' width={65} height={65} alt="logo"></Image>
         </div>
         <div className="flex-none">
         <ul className="menu menu-horizontal px-1">

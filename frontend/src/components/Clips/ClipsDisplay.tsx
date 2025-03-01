@@ -25,10 +25,10 @@ export default function ClipsDisplay({ clips, deleteClip }: ClipProps) {
           </tr>
         </thead>
         <tbody>
-          {clips?.slice().reverse().map(clip => (
+          {clips?.slice().reverse().map((clip, index) => (
             <ClipRow 
               clip={clip}
-              key={clip.title}
+              key={index}
               deleteClip={deleteClip}
               />
           ))}
