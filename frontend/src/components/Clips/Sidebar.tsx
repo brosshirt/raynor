@@ -3,7 +3,11 @@
 import React, { SetStateAction, useState, useRef, useEffect } from 'react'
 import ThreeDots from '../Utility/ThreeDots'
 import PenPaper from '../Utility/PenPaper'
+import CopyButton from '../Utility/CopyButton'
 import { db, ClipFolder } from '@/db'
+import MagnifyingGlass from '../Utility/MagnifyingGlass'
+import { clipListToHtml } from '@/lib/clipFormatter'
+import { copyToClipboard } from '@/lib/genLib'
 
 interface SidebarProps {
   folders: ClipFolder[] | undefined
@@ -41,13 +45,13 @@ const Sidebar = ({ folders, selectedFolderId, setSelectedFolderId}: SidebarProps
   const createFolder = async () => {
     // this will allow us to create a new folder
     const id = await db.clipFolders.add({
-      title: 'New Folder',
+      title: '',
       date: new Date(),
       clips: []
     })
 
     setFolderBeingRenamed(id)
-    setNewFolderName('New Folder')
+    setNewFolderName('')
   }
 
   const deleteFolder = async (folderId: number) => {
@@ -78,6 +82,21 @@ const Sidebar = ({ folders, selectedFolderId, setSelectedFolderId}: SidebarProps
     }
   }
 
+  const copyAllClips = () => {
+    if (!folders){
+      return
+    }
+
+    let html = ''
+
+    for (const folder of folders){
+      html += `<span style="color:red; font-weight:700">${folder.title}</span><br/>`
+      html += clipListToHtml(folder.clips).__html
+    }
+
+    copyToClipboard(html)
+  }
+
 
 
   return (
@@ -86,6 +105,7 @@ const Sidebar = ({ folders, selectedFolderId, setSelectedFolderId}: SidebarProps
     <ul className="p-2 bg-base-200 rounded-box w-56">
       <div className='flex flex-row-reverse'>
         <PenPaper onClick={createFolder}/>
+        <CopyButton onCopy={copyAllClips} height={5} width={5} className=''/>
       </div>
 
       {folders?.map(folder => (
@@ -96,11 +116,11 @@ const Sidebar = ({ folders, selectedFolderId, setSelectedFolderId}: SidebarProps
           >
             <div className='flex justify-between items-center h-full w-full'>
               {folderBeingRenamed === folder.id ? (
-                <input autoFocus ref={folderNameInput} onKeyDown={handleInputKeyDown} type="text" value={newFolderName} onChange={(e) => setNewFolderName(e.currentTarget.value)} 
+                <input placeholder='Folder Name' autoFocus ref={folderNameInput} onKeyDown={handleInputKeyDown} type="text" value={newFolderName} onChange={(e) => setNewFolderName(e.currentTarget.value)} 
                   className='w-full'
                 />
               ) : (
-                <div>{folder.title}</div>
+                <div className='w-3/4 overflow-hidden overflow-ellipsis whitespace-nowrap'>{folder.title}</div>
               )}
               <ThreeDots 
                 onRename={() => startRename(folder.id, folder.title)} 

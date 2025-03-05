@@ -1,7 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { Clip } from '@/db';
-import { articleInfoToHtml } from '@/lib/clipFormatter';
+import { clipListToHtml } from '@/lib/clipFormatter';
+import { copyToClipboard } from '@/lib/genLib';
 
 interface ClipSearchBarProps {
   link: string;
@@ -19,20 +20,10 @@ export default function ClipSearchBar({ link, setLink, generateClip, clips, isLo
       return
     }
     
-    let html = ''
+    let html = clipListToHtml(clips).__html
 
-    for (const clip of clips){
-      html += articleInfoToHtml(clip).__html
-      html += '<br/> <br/>'
-    }
+    copyToClipboard(html)
 
-    console.log('html', html)
-
-    const clipboardItem = new ClipboardItem({
-      'text/html': new Blob([html], { type: 'text/html' }),
-      'text/plain': new Blob([html], { type: 'text/plain' }),
-    });
-    navigator.clipboard.write([clipboardItem]);
 
     setIsCopied(true)
     setTimeout(() => setIsCopied(false), 1000)

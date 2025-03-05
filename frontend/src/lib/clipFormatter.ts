@@ -21,6 +21,16 @@ export async function getClip(link: string) {
   return clip
 }
 
+export function clipListToHtml(clips: Clip[]): {__html: string}{
+  let html = ''
+
+  for (const clip of clips){
+    html += articleInfoToHtml(clip).__html
+    html += '<br/> <br/>'
+  }
+
+  return {__html: html}
+}
 
 
 

@@ -58,7 +58,7 @@ const ClipRow = ({clip, deleteClip }: ClipRowProps) => {
     <tr>
         <td className='w-96 relative'>
             <div className='' dangerouslySetInnerHTML={formattedClipHtml}></div>
-            <CopyButton onCopy={handleCopy}/>
+            <CopyButton onCopy={handleCopy} className='btn-square btn-xs hover:bg-transparent absolute right-0 top-0' height={4} width={4}/>
         </td>
         <td><button className='btn btn-ghost' disabled={errorReported} onClick={() => handleReportError('link generation')}>🚩</button></td>
         <td><button className='btn btn-ghost' onClick={() => deleteClip(clip.article_link)}><Trash/></button></td>
