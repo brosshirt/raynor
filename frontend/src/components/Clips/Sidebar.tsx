@@ -8,6 +8,7 @@ import { db, ClipFolder } from '@/db'
 import MagnifyingGlass from '../Utility/MagnifyingGlass'
 import { clipListToHtml } from '@/lib/clipFormatter'
 import { copyToClipboard } from '@/lib/genLib'
+import Broom from '../Utility/Broom'
 
 interface SidebarProps {
   folders: ClipFolder[] | undefined
@@ -101,6 +102,16 @@ const Sidebar = ({ folders, selectedFolderId, setSelectedFolderId}: SidebarProps
     copyToClipboard(html)
   }
 
+  const clearAllClips = async () => {
+    if (!folders){
+      return
+    }
+    
+    for (const folder of folders){
+      await clearClips(folder.id)
+    }
+  }
+
 
 
   return (
@@ -110,6 +121,7 @@ const Sidebar = ({ folders, selectedFolderId, setSelectedFolderId}: SidebarProps
       <div className='flex flex-row-reverse'>
         <PenPaper onClick={createFolder}/>
         <CopyButton onCopy={copyAllClips} height={5} width={5} className=''/>
+        <Broom onClick={clearAllClips} height={5} width={5} className=''/>
       </div>
 
       {folders?.map(folder => (
