@@ -90,6 +90,10 @@ const Sidebar = ({ folders, selectedFolderId, setSelectedFolderId}: SidebarProps
     let html = ''
 
     for (const folder of folders){
+      if (!folder.clips.length){
+        continue
+      }
+      
       html += `<span style="color:red; font-weight:700">${folder.title}</span><br/>`
       html += clipListToHtml(folder.clips).__html
     }
