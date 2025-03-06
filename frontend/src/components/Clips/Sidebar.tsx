@@ -31,12 +31,12 @@ const Sidebar = ({ folders, selectedFolderId, setSelectedFolderId}: SidebarProps
     }
 
     if (folderBeingRenamed){
-      document.addEventListener('click', undoRenaming)
+      document.addEventListener('mousedown', undoRenaming)
     }
 
 
     return () => {
-      document.removeEventListener('click', undoRenaming)
+      document.removeEventListener('mousedown', undoRenaming)
     }    
   }, [folderBeingRenamed])
 
