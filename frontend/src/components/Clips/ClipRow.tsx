@@ -3,14 +3,18 @@ import CopyButton from '../Utility/CopyButton'
 import { Trash } from 'lucide-react'
 import { articleInfoToHtml } from '@/lib/clipFormatter'
 import { Clip } from '@/db'
+import UpArrow from '../Utility/UpArrow'
+import DownArrow from '../Utility/DownArrow'
 
 
 interface ClipRowProps {
     clip: Clip
     deleteClip: (articleLink:string) => void
+    swapClips: (i: number, j:number) => void
+    index: number
 }
 
-const ClipRow = ({clip, deleteClip }: ClipRowProps) => {
+const ClipRow = ({clip, deleteClip, swapClips, index }: ClipRowProps) => {
   const [formattedClipHtml, setFormattedClipHtml] = useState<{ __html: string }>({__html: ''});
 
   const [errorReported, setErrorReported] = useState(false)
@@ -56,12 +60,18 @@ const ClipRow = ({clip, deleteClip }: ClipRowProps) => {
   
   return (
     <tr>
-        <td className='w-96 relative'>
+        <td className='max-w-96 relative'>
             <div className='' dangerouslySetInnerHTML={formattedClipHtml}></div>
             <CopyButton onCopy={handleCopy} className='btn-square btn-xs hover:bg-transparent absolute right-0 top-0' height={4} width={4}/>
         </td>
         <td><button className='btn btn-ghost' disabled={errorReported} onClick={() => handleReportError('link generation')}>🚩</button></td>
         <td><button className='btn btn-ghost' onClick={() => deleteClip(clip.article_link)}><Trash/></button></td>
+        <td className=''>
+          <div className='min-h-16 flex flex-col items-center justify-evenly'>
+            <UpArrow onClick={() => swapClips(index, index - 1)} height={4} width={4} className=''/>
+            <DownArrow onClick={() => swapClips(index, index + 1)} height={4} width={4} className=''/>
+          </div>
+        </td>
     </tr>
   )
 }

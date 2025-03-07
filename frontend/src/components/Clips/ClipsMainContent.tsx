@@ -51,6 +51,23 @@ export default function ClipsMainContent({ selectedFolderId }: ClipsMainContent)
     })
   }
 
+  const swapClips = async (i: number, j: number) => {
+    // swaps the clips at 2 indices
+    if (!clips || !clips[i] || !clips[j]){
+      return
+    }
+
+    const clipsCopy = clips.slice()
+
+    const temp = clipsCopy[i]
+    clipsCopy[i] = clipsCopy[j]
+    clipsCopy[j] = temp
+
+    await db.clipFolders.update(selectedFolderId, {
+      clips: clipsCopy
+    })
+  }
+
 
 
   return (
@@ -61,7 +78,7 @@ export default function ClipsMainContent({ selectedFolderId }: ClipsMainContent)
             {error}
           </div>
         )}
-        <ClipsDisplay clips={clips} deleteClip={deleteClip} />
+        <ClipsDisplay clips={clips} deleteClip={deleteClip} swapClips={swapClips}/>
     </div>
   )
 

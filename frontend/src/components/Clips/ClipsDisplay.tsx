@@ -6,11 +6,14 @@ import ClipRow from './ClipRow';
 interface ClipProps {
   clips: Clip[] | undefined;
   deleteClip: (articleLink: string) => void
+  swapClips: (i: number, j: number) => void
 }
 
 
 
-export default function ClipsDisplay({ clips, deleteClip }: ClipProps) {
+
+
+export default function ClipsDisplay({ clips, deleteClip, swapClips }: ClipProps) {
   
 
   return (
@@ -22,14 +25,17 @@ export default function ClipsDisplay({ clips, deleteClip }: ClipProps) {
             <th>Clip</th>
             <th>Report Error</th>
             <th>Delete Clip</th>
+            <th>Change Order</th>
           </tr>
         </thead>
         <tbody>
-          {clips?.slice().reverse().map((clip, index) => (
+          {clips?.map((clip, index) => (
             <ClipRow 
               clip={clip}
               key={index}
+              index={index}
               deleteClip={deleteClip}
+              swapClips={swapClips}
               />
           ))}
         </tbody>
