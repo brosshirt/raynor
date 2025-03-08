@@ -2,18 +2,18 @@ import React from 'react'
 
 
 interface UpArrowProps {
-    onClick: () => void
-    height: number
-    width: number
+    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+    height: string
+    width: string
     className: string
 }
 
 
 const UpArrow = ({onClick, height, width, className}: UpArrowProps) => {
   return (
-    <button className={`btn btn-ghost btn-xs ${className}`} onClick={onClick}>
+    <button className={`${className}`} onClick={onClick}>
       <svg 
-        className={`h-${height} w-${width}`}
+        className={`${height} ${width}`}
         xmlns="http://www.w3.org/2000/svg" 
 	    viewBox="0 0 511.947 511.947">
         <path d="M476.847,216.373L263.513,3.04c-4.267-4.053-10.88-4.053-15.04,0L35.14,216.373c-4.16,4.16-4.16,10.88-0.107,15.04

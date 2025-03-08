@@ -3,8 +3,8 @@ import React from 'react'
 
 interface BroomProps {
     onClick: () => void
-    height: number
-    width: number
+    height: string
+    width: string
     className: string
 }
 
@@ -13,7 +13,7 @@ const Broom = ({onClick, height, width, className}: BroomProps) => {
   return (
     <button className={`btn btn-ghost ${className}`} onClick={onClick}>
         <svg 
-            className={`h-${height} w-${width}`}
+            className={`${height} ${width}`}
             viewBox="0 0 1024 1024" 
             version="1.1" 
             xmlns="http://www.w3.org/2000/svg">

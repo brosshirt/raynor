@@ -62,14 +62,14 @@ const ClipRow = ({clip, deleteClip, swapClips, index }: ClipRowProps) => {
     <tr>
         <td className='max-w-96 relative'>
             <div className='' dangerouslySetInnerHTML={formattedClipHtml}></div>
-            <CopyButton onCopy={handleCopy} className='btn-square btn-xs hover:bg-transparent absolute right-0 top-0' height={4} width={4}/>
+            <CopyButton onCopy={handleCopy} className='btn-square btn-xs hover:bg-transparent absolute right-0 top-0' height='h-4' width='w-4'/>
         </td>
         <td><button className='btn btn-ghost' disabled={errorReported} onClick={() => handleReportError('link generation')}>🚩</button></td>
         <td><button className='btn btn-ghost' onClick={() => deleteClip(clip.article_link)}><Trash/></button></td>
         <td className=''>
           <div className='min-h-16 flex flex-col items-center justify-evenly'>
-            <UpArrow onClick={() => swapClips(index, index - 1)} height={4} width={4} className=''/>
-            <DownArrow onClick={() => swapClips(index, index + 1)} height={4} width={4} className=''/>
+            <UpArrow onClick={() => swapClips(index, index - 1)} height='h-4' width='w-4' className=''/>
+            <DownArrow onClick={() => swapClips(index, index + 1)} height='h-4' width='w-4' className=''/>
           </div>
         </td>
     </tr>

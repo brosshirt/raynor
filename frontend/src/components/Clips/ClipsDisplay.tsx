@@ -25,7 +25,7 @@ export default function ClipsDisplay({ clips, deleteClip, swapClips }: ClipProps
             <th>Clip</th>
             <th>Report Error</th>
             <th>Delete Clip</th>
-            <th>Change Order</th>
+            <th>Order</th>
           </tr>
         </thead>
         <tbody>

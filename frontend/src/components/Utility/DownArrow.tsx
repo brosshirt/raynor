@@ -2,18 +2,19 @@ import React from 'react'
 
 
 interface DownArrowProps {
-    onClick: () => void
-    height: number
-    width: number
+    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+    height: string
+    width: string
     className: string
 }
 
 
 const UpArrow = ({onClick, height, width, className}: DownArrowProps) => {
+  
   return (
-    <button className={`btn btn-ghost btn-xs ${className}`} onClick={onClick}>
+    <button className={`${className}`} onClick={onClick}>
       <svg 
-        className={`h-${height} w-${width}`}
+        className={`${height} ${width}`}
         xmlns="http://www.w3.org/2000/svg" 
         viewBox="0 0 511.947 511.947">
 		<path d="M479.114,283.84c-1.707-3.947-5.547-6.507-9.813-6.507h-128V10.667C341.3,4.8,336.5,0,330.633,0H181.3

@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-100">
         <div className="flex-1">
-        <a className="btn btn-ghost text-xl">CommsBot</a>
+        <a className="btn btn-ghost text-xl pr-6">CommsBot</a>
         <Image src='/commsbot-nobg.png' width={65} height={65} alt="logo"></Image>
         </div>
         <div className="flex-none">

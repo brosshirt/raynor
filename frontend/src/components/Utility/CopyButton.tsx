@@ -4,8 +4,8 @@ import React, {useState} from 'react'
 interface CopyButtonProps {
   onCopy: () => void
   className: string 
-  height: number
-  width: number
+  height: string
+  width: string
 }
 
 const CopyButton = ({onCopy, className, height, width}: CopyButtonProps) => {
@@ -24,7 +24,7 @@ const CopyButton = ({onCopy, className, height, width}: CopyButtonProps) => {
         onClick={handleCopy}
         >
         <svg 
-            className={`h-${height} w-${width}`}
+            className={`${height} ${width}`}
             xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 32 32">
                 <path 
