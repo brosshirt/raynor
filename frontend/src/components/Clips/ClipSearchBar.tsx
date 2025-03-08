@@ -20,7 +20,7 @@ export default function ClipSearchBar({ link, setLink, generateClip, clips, isLo
       return
     }
     
-    let html = clipListToHtml(clips).__html
+    const html = clipListToHtml(clips).__html
 
     copyToClipboard(html)
 
