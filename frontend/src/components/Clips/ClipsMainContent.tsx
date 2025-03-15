@@ -30,7 +30,7 @@ export default function ClipsMainContent({ selectedFolderId }: ClipsMainContent)
       const newClip = await getClip(link);
 
       await db.clipFolders.update(selectedFolderId, {
-        clips: clips ? [...clips, newClip] : [newClip]
+        clips: clips ? [newClip, ...clips] : [newClip]
       })
 
       setLink('');
