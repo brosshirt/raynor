@@ -19,15 +19,24 @@ interface SidebarProps {
 
 const Sidebar = ({ folders, selectedFolderId, setSelectedFolderId}: SidebarProps) => {
   const [folderBeingRenamed, setFolderBeingRenamed] = useState<number | undefined>()
-  const [newFolderName, setNewFolderName] = useState('') 
+  
+  const [newFolderName, setNewFolderName] = useState('') // this is the new name for the folder being renamed
 
   const folderNameInput = useRef<HTMLInputElement>(null)
   
 
   useEffect(() => {
-    const undoRenaming = (e: MouseEvent) => {
+    console.log('newFolderName', newFolderName)
+  }, [newFolderName])
+
+
+  useEffect(() => {
+    const undoRenaming = async (e: MouseEvent) => {
       if (!folderNameInput.current?.contains(e.target as Node)){
-        console.log('undoing rename')
+
+        await db.clipFolders.update(folderBeingRenamed!, {
+          title: folderNameInput.current?.value
+        })
         setFolderBeingRenamed(undefined)
       }
     }
@@ -75,6 +84,8 @@ const Sidebar = ({ folders, selectedFolderId, setSelectedFolderId}: SidebarProps
   const handleInputKeyDown = async (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter'){
       if (folderBeingRenamed){
+        console.log('folderBeingRenamed', folderBeingRenamed)
+        console.log('newFolderName', newFolderName)
         await db.clipFolders.update(folderBeingRenamed, {
           title: newFolderName
         })
