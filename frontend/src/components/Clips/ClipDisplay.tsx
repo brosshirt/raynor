@@ -19,22 +19,11 @@ const ClipDisplay = ({ clip, editClip }: ClipDisplayProps) => {
     const divElement = useRef<HTMLDivElement | null>(null)
 
 
-    useEffect(() => {
-      console.log('title has changed')
-    }, [title])
-
 
 
     useEffect(() => {
       // we're trying to support the ability to click off and have your results save, I think for simplicities sake I'll just do the entire div
-      
-      
-      setTimeout(() => {
-        console.log('clip title', clip.title)
-        console.log('state title', title)
-
-      },1000)
-      
+            
       
       const saveChanges = async (e: MouseEvent) => {
         if (!divElement.current?.contains(e.target as Node)){
@@ -90,7 +79,7 @@ const ClipDisplay = ({ clip, editClip }: ClipDisplayProps) => {
   
     
   
-    const doubleClickLinkHandler = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const doubleClickLinkHandler = () => {
       linkSingleClick.current = false
   
       setSelectedField('title')
