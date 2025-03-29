@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import ClipSearchBar from './ClipSearchBar';
 import { getClip } from '@/lib/clipFormatter';
 import ClipsDisplay from './ClipsDisplay';
-import {db} from '@/db'
+import {Clip, db} from '@/db'
 import { useLiveQuery } from 'dexie-react-hooks';
 
 interface ClipsMainContent {
@@ -51,6 +51,19 @@ export default function ClipsMainContent({ selectedFolderId }: ClipsMainContent)
     })
   }
 
+  const editClip = async (newClip: Clip) => {
+    const mapFunc = (clip: Clip) => {
+      if (clip.article_link === newClip.article_link){
+        return newClip
+      }
+      return clip
+    }
+    
+    await db.clipFolders.update(selectedFolderId, {
+      clips: clips ? clips.map(mapFunc) : []
+    })
+  }
+
   const swapClips = async (i: number, j: number) => {
     // swaps the clips at 2 indices
     if (!clips || !clips[i] || !clips[j]){
@@ -78,7 +91,7 @@ export default function ClipsMainContent({ selectedFolderId }: ClipsMainContent)
             {error}
           </div>
         )}
-        <ClipsDisplay clips={clips} deleteClip={deleteClip} swapClips={swapClips}/>
+        <ClipsDisplay clips={clips} deleteClip={deleteClip} swapClips={swapClips} editClip={editClip}/>
     </div>
   )
 

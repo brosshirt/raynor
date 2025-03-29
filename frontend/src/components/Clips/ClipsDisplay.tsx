@@ -6,6 +6,7 @@ import ClipRow from './ClipRow';
 interface ClipProps {
   clips: Clip[] | undefined;
   deleteClip: (articleLink: string) => void
+  editClip: (newClip: Clip) => void
   swapClips: (i: number, j: number) => void
 }
 
@@ -13,7 +14,7 @@ interface ClipProps {
 
 
 
-export default function ClipsDisplay({ clips, deleteClip, swapClips }: ClipProps) {
+export default function ClipsDisplay({ clips, deleteClip, editClip, swapClips }: ClipProps) {
   
 
   return (
@@ -32,10 +33,11 @@ export default function ClipsDisplay({ clips, deleteClip, swapClips }: ClipProps
           {clips?.map((clip, index) => (
             <ClipRow 
               clip={clip}
-              key={index}
+              key={clip.article_link}
               index={index}
               deleteClip={deleteClip}
               swapClips={swapClips}
+              editClip={editClip}
               />
           ))}
         </tbody>

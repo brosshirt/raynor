@@ -1,35 +1,32 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import CopyButton from '../Utility/CopyButton'
-import { Trash } from 'lucide-react'
+import {Trash } from 'lucide-react'
 import { articleInfoToHtml } from '@/lib/clipFormatter'
 import { Clip } from '@/db'
 import UpArrow from '../Utility/UpArrow'
 import DownArrow from '../Utility/DownArrow'
+import ClipDisplay from './ClipDisplay'
 
 
 interface ClipRowProps {
     clip: Clip
     deleteClip: (articleLink:string) => void
     swapClips: (i: number, j:number) => void
+    editClip: (newClip: Clip) => void
     index: number
 }
 
-const ClipRow = ({clip, deleteClip, swapClips, index }: ClipRowProps) => {
-  const [formattedClipHtml, setFormattedClipHtml] = useState<{ __html: string }>({__html: ''});
+const ClipRow = ({clip, deleteClip, swapClips, editClip, index }: ClipRowProps) => {
 
   const [errorReported, setErrorReported] = useState(false)
 
-  useEffect(() => {
-    if (clip) {
-      const html = articleInfoToHtml(clip);
-      setFormattedClipHtml(html);
-    }
-  }, [clip]);
-
   const handleCopy = () => {
+
+    const html = articleInfoToHtml(clip);
+
     const clipboardItem = new ClipboardItem({
-      'text/html': new Blob([formattedClipHtml.__html], { type: 'text/html' }),
-      'text/plain': new Blob([formattedClipHtml.__html], { type: 'text/plain' }),
+      'text/html': new Blob([html.__html], { type: 'text/html' }),
+      'text/plain': new Blob([html.__html], { type: 'text/plain' }),
     });
     navigator.clipboard.write([clipboardItem]);
   };
@@ -56,12 +53,14 @@ const ClipRow = ({clip, deleteClip, swapClips, index }: ClipRowProps) => {
     }
     console.log('backend response', data)
   };
-  
+
+
+
   
   return (
     <tr>
         <td className='max-w-96 relative'>
-            <div className='' dangerouslySetInnerHTML={formattedClipHtml}></div>
+            <ClipDisplay clip={clip} editClip={editClip}/>
             <CopyButton onCopy={handleCopy} className='btn-square btn-xs hover:bg-transparent absolute right-0 top-0' height='h-4' width='w-4'/>
         </td>
         <td><button className='btn btn-ghost' disabled={errorReported} onClick={() => handleReportError('link generation')}>🚩</button></td>

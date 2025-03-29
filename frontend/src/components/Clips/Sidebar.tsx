@@ -84,8 +84,6 @@ const Sidebar = ({ folders, selectedFolderId, setSelectedFolderId}: SidebarProps
   const handleInputKeyDown = async (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter'){
       if (folderBeingRenamed){
-        console.log('folderBeingRenamed', folderBeingRenamed)
-        console.log('newFolderName', newFolderName)
         await db.clipFolders.update(folderBeingRenamed, {
           title: newFolderName
         })
