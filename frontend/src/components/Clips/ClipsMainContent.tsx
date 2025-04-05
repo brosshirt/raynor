@@ -45,6 +45,22 @@ export default function ClipsMainContent({ selectedFolderId }: ClipsMainContent)
     }
   };
 
+  const addEmptyClip = async () => {
+    const emptyClip: Clip = {
+      title: 'Title',
+      article_link: link,
+      publication_date: 'Date',
+      publication: 'Publication',
+      authors: ['Author']
+    }
+
+    await db.clipFolders.update(selectedFolderId, {
+      clips: clips ? [emptyClip, ...clips] : [emptyClip]
+    })
+
+    setLink('')
+  }
+
   const deleteClip = async (articleLink: string) => {
     await db.clipFolders.update(selectedFolderId, {
       clips: clips ? clips.filter(clip => clip.article_link !== articleLink): []
@@ -85,7 +101,7 @@ export default function ClipsMainContent({ selectedFolderId }: ClipsMainContent)
 
   return (
     <div className='space-y-4'>
-        <ClipSearchBar link={link} setLink={setLink} generateClip={generateClip} clips={clips} isLoading={isLoading} />
+        <ClipSearchBar link={link} setLink={setLink} generateClip={generateClip} addEmptyClip={addEmptyClip} clips={clips} isLoading={isLoading} />
         {error && (
           <div className='text-error'>
             {error}

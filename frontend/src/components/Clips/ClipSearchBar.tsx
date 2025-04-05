@@ -8,11 +8,12 @@ interface ClipSearchBarProps {
   link: string;
   setLink: (value: string) => void;
   generateClip: () => void;
+  addEmptyClip: () => void;
   clips: Clip[] | undefined
   isLoading: boolean
 }
 
-export default function ClipSearchBar({ link, setLink, generateClip, clips, isLoading }: ClipSearchBarProps) {
+export default function ClipSearchBar({ link, setLink, generateClip, addEmptyClip, clips, isLoading }: ClipSearchBarProps) {
   const [isCopied, setIsCopied] = useState(false)
   
   const copyClips = async () => {
@@ -42,6 +43,12 @@ export default function ClipSearchBar({ link, setLink, generateClip, clips, isLo
         className="btn btn-sm"
       >
         Get Clip
+      </button>
+      <button
+        onClick={addEmptyClip}
+        className="btn btn-sm"
+      >
+        Add Empty Clip
       </button>
       <button
         onClick={copyClips}
