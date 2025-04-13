@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react'
 
 interface ClipDisplayProps {
     clip: Clip
-    editClip: (newClip: Clip) => void
+    editClip: (articleLink: string, updatedFields: Partial<Clip>) => void
 }
 
 
@@ -21,10 +21,7 @@ const ClipDisplay = ({ clip, editClip }: ClipDisplayProps) => {
 
 
 
-    useEffect(() => {
-      // we're trying to support the ability to click off and have your results save, I think for simplicities sake I'll just do the entire div
-            
-      
+    useEffect(() => {   
       const saveChanges = async (e: MouseEvent) => {
         if (!divElement.current?.contains(e.target as Node)){
           updateClip()
@@ -45,10 +42,9 @@ const ClipDisplay = ({ clip, editClip }: ClipDisplayProps) => {
         publication_date: date,
         publication: publication,
         authors: authors.split(', '),
-        article_link: clip.article_link
       }
 
-      editClip(newClip)
+      editClip(clip.article_link, newClip)
 
       setSelectedField(null)
     }

@@ -6,7 +6,7 @@ import ClipRow from './ClipRow';
 interface ClipProps {
   clips: Clip[] | undefined;
   deleteClip: (articleLink: string) => void
-  editClip: (newClip: Clip) => void
+  editClip: (articleLink: string, updatedFields: Partial<Clip>) => void
   swapClips: (i: number, j: number) => void
 }
 
@@ -27,6 +27,7 @@ export default function ClipsDisplay({ clips, deleteClip, editClip, swapClips }:
             <th>Report Error</th>
             <th>Delete Clip</th>
             <th>Order</th>
+            <th>Notes</th>
           </tr>
         </thead>
         <tbody>

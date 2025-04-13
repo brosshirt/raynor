@@ -6,6 +6,7 @@ import ClipsDisplay from './ClipsDisplay';
 import {Clip, db} from '@/db'
 import { useLiveQuery } from 'dexie-react-hooks';
 
+
 interface ClipsMainContent {
   selectedFolderId: number
 }
@@ -46,12 +47,19 @@ export default function ClipsMainContent({ selectedFolderId }: ClipsMainContent)
   };
 
   const addEmptyClip = async () => {
+    if (!link){
+      setError('Please enter a link first')
+      return
+    }
+    
+    
     const emptyClip: Clip = {
       title: 'Title',
       article_link: link,
       publication_date: 'Date',
       publication: 'Publication',
-      authors: ['Author']
+      authors: ['Author'],
+      notesHtml: ''
     }
 
     await db.clipFolders.update(selectedFolderId, {
@@ -59,20 +67,25 @@ export default function ClipsMainContent({ selectedFolderId }: ClipsMainContent)
     })
 
     setLink('')
+    setError('')
   }
 
   const deleteClip = async (articleLink: string) => {
     await db.clipFolders.update(selectedFolderId, {
       clips: clips ? clips.filter(clip => clip.article_link !== articleLink): []
     })
+    
   }
 
-  const editClip = async (newClip: Clip) => {
+  const editClip = async (articleLink: string, updatedFields: Partial<Clip>) => {
+    
     const mapFunc = (clip: Clip) => {
-      if (clip.article_link === newClip.article_link){
-        return newClip
+      if (clip.article_link !== articleLink) return clip
+
+      return {
+        ...clip,
+        ...updatedFields
       }
-      return clip
     }
     
     await db.clipFolders.update(selectedFolderId, {

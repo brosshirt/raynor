@@ -7,6 +7,7 @@ interface Clip {
   publication: string;
   publication_date: string;
   authors: string[]
+  notesHtml: string
 }
 
 interface ClipFolder {

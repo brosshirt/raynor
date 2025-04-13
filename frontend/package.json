@@ -9,8 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@lexical/html": "^0.29.0",
+    "@lexical/react": "^0.29.0",
+    "@tiptap/extension-bullet-list": "^2.11.7",
+    "@tiptap/extension-list-item": "^2.11.7",
+    "@tiptap/pm": "^2.11.7",
+    "@tiptap/react": "^2.11.7",
+    "@tiptap/starter-kit": "^2.11.7",
     "dexie": "^4.0.11",
     "dexie-react-hooks": "^1.1.7",
+    "lexical": "^0.29.0",
     "lucide-react": "^0.475.0",
     "next": "^15.1.6",
     "react": "^19.0.0",

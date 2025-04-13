@@ -6,13 +6,14 @@ import { Clip } from '@/db'
 import UpArrow from '../Utility/UpArrow'
 import DownArrow from '../Utility/DownArrow'
 import ClipDisplay from './ClipDisplay'
+import TextArea from '@/components/Utility/TextArea/TextArea'
 
 
 interface ClipRowProps {
     clip: Clip
     deleteClip: (articleLink:string) => void
     swapClips: (i: number, j:number) => void
-    editClip: (newClip: Clip) => void
+    editClip: (articleLink: string, updatedFields: Partial<Clip>) => void
     index: number
 }
 
@@ -70,6 +71,9 @@ const ClipRow = ({clip, deleteClip, swapClips, editClip, index }: ClipRowProps) 
             <UpArrow onClick={() => swapClips(index, index - 1)} height='h-4' width='w-4' className=''/>
             <DownArrow onClick={() => swapClips(index, index + 1)} height='h-4' width='w-4' className=''/>
           </div>
+        </td>
+        <td className='grid place-items-start'>
+          <TextArea clip={clip} editClip={editClip}/>
         </td>
     </tr>
   )
