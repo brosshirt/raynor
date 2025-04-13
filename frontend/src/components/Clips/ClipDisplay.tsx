@@ -18,7 +18,18 @@ const ClipDisplay = ({ clip, editClip }: ClipDisplayProps) => {
 
     const divElement = useRef<HTMLDivElement | null>(null)
 
+    const updateClip = () => {
+      const newClip = {
+        title: title,
+        publication_date: date,
+        publication: publication,
+        authors: authors.split(', '),
+      }
 
+      editClip(clip.article_link, newClip)
+
+      setSelectedField(null)
+    }
 
 
     useEffect(() => {   
@@ -34,20 +45,9 @@ const ClipDisplay = ({ clip, editClip }: ClipDisplayProps) => {
 
       return () => document.removeEventListener('mousedown', saveChanges)
 
-    }, [selectedField, title, publication, date, authors])
+    }, [selectedField, title, publication, date, authors, updateClip])
     
-    const updateClip = () => {
-      const newClip = {
-        title: title,
-        publication_date: date,
-        publication: publication,
-        authors: authors.split(', '),
-      }
 
-      editClip(clip.article_link, newClip)
-
-      setSelectedField(null)
-    }
     
 
 

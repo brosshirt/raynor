@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import Tools from './Tools'
 
 import { LexicalComposer } from '@lexical/react/LexicalComposer'

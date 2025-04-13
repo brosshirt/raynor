@@ -33,7 +33,7 @@ const Tools = ({ onTextChange, notesHtml }: ToolsProps) => {
 
       isMountedRef.current = true
     })
-  }, [editor])
+  }, [editor, notesHtml])
 
   const saveNotes = () => {
     editor.read(() => {
